@@ -38,7 +38,8 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 }
 
 export default {
-  async fetch(request: Request, env: unknown, ctx: unknown) {
+  async fetch(request: Request, env: any, ctx: unknown) {
+    (globalThis as any).GEMINI_API_KEY = env.GEMINI_API_KEY;
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);

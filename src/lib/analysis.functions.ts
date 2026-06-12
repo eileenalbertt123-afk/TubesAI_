@@ -57,7 +57,7 @@ export const analyzeContent = createServerFn({ method: "POST" })
     return { content: trimmed };
   })
   .handler(async ({ data }): Promise<AnalysisResult> => {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = (globalThis as any).GEMINI_API_KEY ?? (globalThis as any).ENV?.GEMINI_API_KEY;
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY belum dikonfigurasi di server.");
     }
@@ -163,7 +163,7 @@ export const transcribeVideo = createServerFn({ method: "POST" })
     };
   })
   .handler(async ({ data }) => {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = (globalThis as any).GEMINI_API_KEY ?? (globalThis as any).ENV?.GEMINI_API_KEY;
     if (!apiKey) throw new Error("GEMINI_API_KEY belum dikonfigurasi di server.");
 
     // Convert ArrayBuffer to base64 (chunked to avoid call-stack limits).
@@ -272,7 +272,7 @@ export const extractImageText = createServerFn({ method: "POST" })
     };
   })
   .handler(async ({ data }) => {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = (globalThis as any).GEMINI_API_KEY ?? (globalThis as any).ENV?.GEMINI_API_KEY;
     if (!apiKey) throw new Error("GEMINI_API_KEY belum dikonfigurasi di server.");
 
     const bytes = new Uint8Array(data.bytes);
