@@ -47,7 +47,7 @@ Wajib:
 - Jika konten tidak terkait kesehatan, kembalikan claims kosong dan summary menjelaskannya, credibility_score 50, risk LOW.`;
 
 export const analyzeContent = createServerFn({ method: "POST" })
-  .inputValidator((data: { content: string }) => {
+  .validator((data: { content: string }) => {
     if (!data || typeof data.content !== "string") {
       throw new Error("Konten tidak valid.");
     }
@@ -139,7 +139,7 @@ Aturan:
 - Tidak perlu timestamp. Tidak ada code fence. Tidak ada penjelasan tambahan.`;
 
 export const transcribeVideo = createServerFn({ method: "POST" })
-  .inputValidator(async (data: unknown) => {
+  .validator(async (data: unknown) => {
     if (!(data instanceof FormData)) throw new Error("Permintaan tidak valid.");
     const file = data.get("file");
     if (!(file instanceof File)) throw new Error("File video tidak ditemukan.");
@@ -251,7 +251,7 @@ Aturan:
 - Jangan tambahkan code fence, penjelasan, atau teks di luar JSON.`;
 
 export const extractImageText = createServerFn({ method: "POST" })
-  .inputValidator(async (data: unknown) => {
+  .validator(async (data: unknown) => {
     if (!(data instanceof FormData)) throw new Error("Permintaan tidak valid.");
     const file = data.get("file");
     if (!(file instanceof File)) throw new Error("File gambar tidak ditemukan.");
